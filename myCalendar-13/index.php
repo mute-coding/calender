@@ -20,6 +20,27 @@
 </head>
 <body>
 <?php
+function db_insertNote($uid, $color, $text){ //新增記事資料函式
+  global $wpdb;  //宣告WordPress的全域資料庫物件    
+  $text = $wpdb->_real_escape($text);
+
+  $wpdb->insert($wpdb->prefix."calendar_note", array(
+    "note_id" => $uid, 
+    "note_color" => $color,
+    "note_text" => $text
+  ),array(
+    "%s",
+    "%s",
+    "%s"
+  ));
+  // $query = "INSERT INTO notes(note_id, note_color, note_text) VALUES('$uid', '$color', '$text')";
+  // $result = mysqli_query($connection, $query);
+}  
+
+if(isset($_POST['new_note_uid'])){ //前端傳來新增記事資料
+  db_insertNote($_POST['new_note_uid'], $_POST['new_note_color'], $_POST['new_note_text']);
+}
+
     $connection = mysqli_connect("localhost", "u1085123", "mutemute1085123", "u1085123_wp_dev"); //連線資料庫
     if(!$connection){ //如果連線失敗
         die("There was an error connecting to the database."); //網頁宣告到此die，並在網頁輸出…

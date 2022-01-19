@@ -53,6 +53,9 @@ function submitPostIt(){ //按了PostIt按鍵後，所要執行的方法
   }
   if(newCurrentPostIt){ //如果是新記事的話
       postIts.push(postIt); //將新記事postIT物件推入postIts陣列
+      ajax({new_note_uid: postIt.id, 
+        new_note_color: postIt.note_num, 
+        new_note_text: postIt.note});
   } else {
       postIts[currentPostItIndex].note = postIt.note; //更新現有記事物件的記事資料
   }
